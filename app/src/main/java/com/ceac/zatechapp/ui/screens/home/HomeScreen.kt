@@ -1,8 +1,10 @@
 package com.ceac.zatechapp.ui.screens.home
 
 
+import android.media.Image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -77,8 +79,10 @@ fun HomeScreenVisual() {
                 // El padding horizontal se aplica a los componentes internos para mayor control
 
                 // 1. Barra Superior (Búsqueda y Notificaciones)
-                TopSearchBarVisual(icon = Icons.Default.Search,
-                    placeholder = "Search")
+                TopSearchBarVisual(
+                    icon = Icons.Default.Search,
+                    placeholder = "Search"
+                )
 
                 // 2. Banner de Promoción (20% OFF)
                 PromotionBannerVisual()
@@ -88,7 +92,7 @@ fun HomeScreenVisual() {
                 Spacer(modifier = Modifier.height(1.dp))
                 // 4. Recomendaciones (Carrusel horizontal)
                 RecommendationsSectionVisual()
-
+                Spacer(modifier = Modifier.height(20.dp))
                 // 5. Productos Populares (Grid o Lista)
                 PopularProductsSectionVisual()
 
@@ -101,8 +105,10 @@ fun HomeScreenVisual() {
 
 
 @Composable
-fun TopSearchBarVisual(icon: Any, // Puede ser un ImageVector (para Icons.Default) o un Painter (para imágenes drawable)
-                       placeholder: String,) {
+fun TopSearchBarVisual(
+    icon: Any, // Puede ser un ImageVector (para Icons.Default) o un Painter (para imágenes drawable)
+    placeholder: String,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -130,7 +136,7 @@ fun TopSearchBarVisual(icon: Any, // Puede ser un ImageVector (para Icons.Defaul
             ) {
                 // Elemento visual
                 when (icon) {
-                    is androidx.compose.ui.graphics.vector.ImageVector -> {
+                    is ImageVector -> {
                         Icon(
                             imageVector = icon, // Usa el icono pasado como parámetro
                             contentDescription = null,
@@ -164,7 +170,11 @@ fun TopSearchBarVisual(icon: Any, // Puede ser un ImageVector (para Icons.Defaul
                 containerColor = Color(0xFFF0F0F0) // Fondo gris claro
             )
         ) {
-            Icon(Icons.Default.Notifications, contentDescription = "Notifications", tint = Color.Gray)
+            Icon(
+                Icons.Default.Notifications,
+                contentDescription = "Notifications",
+                tint = Color.Gray
+            )
         }
     }
 }
@@ -183,7 +193,9 @@ fun PromotionBannerVisual() {
         shape = RoundedCornerShape(25.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
@@ -192,25 +204,29 @@ fun PromotionBannerVisual() {
                 painter = painterResource(id = R.drawable.descuento),
                 contentDescription = "Logo de la App",
                 modifier = Modifier.size(70.dp),
-                contentScale = ContentScale.Fit)
+                contentScale = ContentScale.Fit
+            )
 
             // Texto de la promoción
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "En tu primera\n      compra",
                     color = Color.Black,
-                    fontSize = 10.sp)
+                    fontSize = 10.sp
+                )
                 Text(
                     text = "RECIBE UN",
                     color = Color.Black,
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold)
+                    fontWeight = FontWeight.Bold
+                )
             }
             Text(
                 text = "20%",
                 fontSize = 48.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = Color.Black)
+                color = Color.Black
+            )
         }
     }
 }
@@ -219,7 +235,10 @@ fun PromotionBannerVisual() {
 @Composable
 fun CategoryRowVisual() {
     Column(
-        modifier = Modifier.padding(top = 24.dp, bottom = 24.dp).padding(horizontal = 24.dp)) {
+        modifier = Modifier
+            .padding(top = 24.dp, bottom = 24.dp)
+            .padding(horizontal = 24.dp)
+    ) {
 
         // Fila de iconos
         Row(
@@ -275,15 +294,21 @@ fun CategoryItem(iconPainter: Painter, iconText: String) {
 
             Box(contentAlignment = Alignment.Center) {
                 Image(
-                painter = iconPainter,
-                contentDescription = "Logo de la App",
-                modifier = Modifier.size(38.dp),
-                contentScale = ContentScale.Fit) // Emoji como placeholder
+                    painter = iconPainter,
+                    contentDescription = "Logo de la App",
+                    modifier = Modifier.size(38.dp),
+                    contentScale = ContentScale.Fit
+                ) // Emoji como placeholder
             }
 
         }
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = iconText, fontSize = 12.sp, textAlign = TextAlign.Center, fontWeight = FontWeight.Medium)
+        Text(
+            text = iconText,
+            fontSize = 12.sp,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Medium
+        )
     }
 }
 
@@ -295,7 +320,9 @@ fun RecommendationsSectionVisual() {
             text = "Recomendaciones de la semana",
             color = Color(0xFF595959),
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(horizontal = 24.dp).padding(bottom = 12.dp)
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .padding(bottom = 12.dp)
         )
 
         // LAZYROW: Contenedor para el scroll horizontal
@@ -308,8 +335,7 @@ fun RecommendationsSectionVisual() {
                 RecommendationCard(
                     title = "Móviles",
                     subtitle = "12 Marcas",
-                    // En una app real, aquí usarías una imagen específica
-                    imagePlaceholder = Color.Gray // Placeholder de color para la imagen
+                    image = R.drawable.recomendations_1  // Placeholder de color para la imagen
                 )
             }
             item {
@@ -317,7 +343,7 @@ fun RecommendationsSectionVisual() {
                 RecommendationCard(
                     title = "Moda",
                     subtitle = "10 Marcas",
-                    imagePlaceholder = Color.LightGray
+                    image = R.drawable.recomendations_2
                 )
             }
             // Puedes añadir más items aquí si tu diseño tiene más secciones
@@ -330,7 +356,7 @@ fun RecommendationsSectionVisual() {
 fun RecommendationCard(
     title: String,
     subtitle: String,
-    imagePlaceholder: Color // Simulación de una imagen de fondo
+    image: Int// Simulación de una imagen de fondo
 ) {
     // Definimos el tamaño y la forma de la tarjeta
     val cardWidth = 250.dp
@@ -341,36 +367,30 @@ fun RecommendationCard(
             .width(cardWidth)
             .height(cardHeight),
         shape = RoundedCornerShape(20.dp),
-        // No tiene elevación visible en el diseño de Figma, así que la dejamos baja
+
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         // BOX: Usado para superponer el texto sobre el fondo/imagen
         Box(
-            modifier = Modifier.fillMaxSize()
-                .background(imagePlaceholder) // Color de fondo simulando la imagen
+            modifier = Modifier
+                .fillMaxSize()
         ) {
-            // Gradiente oscuro en la parte inferior para que el texto blanco resalte
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.5f)),
-                            startY = cardHeight.value * 0.4f, // Inicia el gradiente a media altura
-                            endY = cardHeight.value
-                        )
-                    )
+
+            Image(
+                painter = painterResource(id = image),
+                contentDescription = "Logo de la App",
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.Crop
             )
 
             // Texto de la categoría alineado a la izquierda-inferior
             Column(
                 modifier = Modifier
-                    .align(Alignment.TopStart)
+                    .align(Alignment.CenterStart)
                     .padding(8.dp)
             ) {
                 Text(
                     text = title,
-
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp
@@ -382,18 +402,23 @@ fun RecommendationCard(
                 )
             }
         }
+
     }
 }
 
 @Composable
 fun PopularProductsSectionVisual() {
     Column(
-        modifier = Modifier.padding(horizontal = 24.dp).padding(top = 16.dp)) {
+        modifier = Modifier
+            .padding(horizontal = 24.dp)
+            .padding(top = 16.dp)
+    ) {
         Text(
             text = "Productos Populares",
             color = Color(0xFF595959),
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(bottom = 16.dp))
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
 
         // En lugar de LazyVerticalGrid, usaremos Column + Row con dos Cards para la maquetación estática
         Row(
@@ -404,16 +429,20 @@ fun PopularProductsSectionVisual() {
             ProductCardVisual(
                 productName = "Zapatillas Nike",
                 price = "200,00 EUR",
-                imagePlaceholder = "👟",
-                modifier = Modifier.weight(1f).padding(end = 8.dp)
+                image = R.drawable.zapatillas_nike,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp)
             )
 
             // Producto 2: Mando Xbox (ocupa la otra mitad)
             ProductCardVisual(
                 productName = "Mando Xbox",
                 price = "40,00 EUR",
-                imagePlaceholder = "🎮",
-                modifier = Modifier.weight(1f).padding(start = 8.dp)
+                image = R.drawable.mando_xbox,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp)
             )
         }
     }
@@ -421,28 +450,46 @@ fun PopularProductsSectionVisual() {
 
 // Card de Producto Individual
 @Composable
-fun ProductCardVisual(productName: String, price: String, imagePlaceholder: String, modifier: Modifier) {
+fun ProductCardVisual(
+    productName: String,
+    price: String,
+    image: Int,
+    modifier: Modifier
+) {
     Card(
-        modifier = modifier.height(250.dp), // Altura fija
+        modifier = modifier.height(250.dp),
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.background)
+
+
     ) {
-        Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        ) {
             // Área de Imagen (Placeholder)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(Color(0xFFF0F0F0)), // Fondo gris de la imagen
+                    .background(Color(0xFFE5E5E5)), // Fondo gris de la imagen
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = imagePlaceholder, fontSize = 48.sp)
+                Image(
+                    painter = painterResource(id = image),
+                    contentDescription = "Logo de la App",
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.Crop
+                )
                 // Icono de corazón en la esquina superior derecha (superpuesto)
                 Icon(
                     imageVector = Icons.Filled.FavoriteBorder,
                     contentDescription = "Add to Favorites",
-                    modifier = Modifier.align(Alignment.TopEnd).padding(8.dp),
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp),
                     tint = Color.Red
                 )
             }
@@ -484,7 +531,9 @@ fun AppBottomBarVisual() {
 
     // FAB de la Cesta
     Box(
-        modifier = Modifier.fillMaxWidth().offset(y = (-30).dp), // Subir el FAB
+        modifier = Modifier
+            .fillMaxWidth()
+            .offset(y = (-30).dp), // Subir el FAB
         contentAlignment = Alignment.Center
     ) {
         FloatingActionButton(
@@ -514,6 +563,6 @@ fun RowScope.BottomNavItem(icon: ImageVector, label: String, isSelected: Boolean
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewHomeScreenVisual (){
+fun PreviewHomeScreenVisual() {
     HomeScreenVisual()
 }
