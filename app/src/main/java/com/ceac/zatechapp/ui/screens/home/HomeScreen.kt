@@ -1,10 +1,8 @@
 package com.ceac.zatechapp.ui.screens.home
 
 
-import android.media.Image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,11 +42,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -61,6 +59,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ceac.zatechapp.R
+import com.ceac.zatechapp.ui.components.SimpleDropShadowUsage
+import com.ceac.zatechapp.ui.theme.BackgroundWhite
 import com.ceac.zatechapp.ui.theme.GraySecondaryText
 
 
@@ -89,10 +89,12 @@ fun HomeScreenVisual() {
 
                 // 3. Fila de Categorías (Sneakers, Tech, etc.)
                 CategoryRowVisual()
-                Spacer(modifier = Modifier.height(1.dp))
+
                 // 4. Recomendaciones (Carrusel horizontal)
                 RecommendationsSectionVisual()
-                Spacer(modifier = Modifier.height(20.dp))
+
+                Spacer(modifier = Modifier.height(10.dp))
+
                 // 5. Productos Populares (Grid o Lista)
                 PopularProductsSectionVisual()
 
@@ -121,10 +123,8 @@ fun TopSearchBarVisual(
         Surface(
             modifier = Modifier
                 .width(280.dp)
-                .height(56.dp), // Altura fija como un campo de entrada estándar
-            // Color de fondo: Usamos un gris muy claro que simula el diseño de Figma
+                .height(56.dp),
             color = Color(0xFFEEEBEB),
-            // Forma: Esquinas redondeadas (por ejemplo, 12.dp)
             shape = RoundedCornerShape(12.dp)
         ) {
             // Organiza el icono y el texto horizontalmente
@@ -144,10 +144,10 @@ fun TopSearchBarVisual(
                             modifier = Modifier.size(24.dp)
                         )
                     }
-                    // Usar Painter para imagen propia
+
                 }
 
-                Spacer(modifier = Modifier.width(16.dp)) // Espacio entre el icono y el texto
+                Spacer(modifier = Modifier.width(16.dp))
 
                 //  El texto guía
                 Text(
@@ -272,49 +272,39 @@ fun CategoryRowVisual() {
             // ️ 5. Estilo & Cultura
             CategoryItem(
                 iconPainter = painterResource(id = R.drawable.estilo_y_cultura_image), //
-                iconText = "Estilo &\nCultura" // Texto en dos líneas
+                iconText = "Estilo &\nCultura"
             )
         }
     }
 }
 
-val ColorBase = Color(0xFFEA553B)
-val ColorConOpacidad46 = ColorBase.copy(alpha = 0.46f) //PARA DARLE UNA OPACIDAD DEL 46%
 
-// Item individual: Círculo gris claro con un texto debajo
+
 @Composable
 fun CategoryItem(iconPainter: Painter, iconText: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Surface(
-            modifier = Modifier.size(60.dp),
-            shape = RoundedCornerShape(16.dp),
-            color = ColorConOpacidad46,
-            //Aqui iria la funcion de la sombra
-        ) {
 
-            Box(contentAlignment = Alignment.Center) {
-                Image(
-                    painter = iconPainter,
-                    contentDescription = "Logo de la App",
-                    modifier = Modifier.size(38.dp),
-                    contentScale = ContentScale.Fit
-                ) // Emoji como placeholder
-            }
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
+            SimpleDropShadowUsage(
+                imagePainter = iconPainter
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = iconText,
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Medium,
+                color = GraySecondaryText
+            )
         }
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = iconText,
-            fontSize = 12.sp,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Medium
-        )
-    }
+
 }
 
 @Composable
 fun RecommendationsSectionVisual() {
-    Column(modifier = Modifier.padding(top = 16.dp)) {
+    Column(modifier = Modifier.padding(top = 1.dp)) {
         // Título de la sección
         Text(
             text = "Recomendaciones de la semana",
@@ -398,6 +388,7 @@ fun RecommendationCard(
                 Text(
                     text = subtitle,
                     color = Color.White,
+                    fontWeight = FontWeight.Bold,
                     fontSize = 12.sp
                 )
             }
@@ -468,19 +459,21 @@ fun ProductCardVisual(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            // Área de Imagen (Placeholder)
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(15.dp))
                     .background(Color(0xFFE5E5E5)), // Fondo gris de la imagen
                 contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painterResource(id = image),
                     contentDescription = "Logo de la App",
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(100.dp),
                     contentScale = ContentScale.Crop
                 )
                 // Icono de corazón en la esquina superior derecha (superpuesto)
@@ -498,7 +491,7 @@ fun ProductCardVisual(
 
             // Información del Producto
             Text(text = productName, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text(text = price, fontWeight = FontWeight.Bold, color = Color.Red)
+            Text(text = price, fontWeight = FontWeight.Bold, color = Color(0xFF005147))
         }
     }
 }
@@ -564,5 +557,10 @@ fun RowScope.BottomNavItem(icon: ImageVector, label: String, isSelected: Boolean
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreenVisual() {
-    HomeScreenVisual()
+    MaterialTheme(
+        colorScheme = lightColorScheme(
+            background = BackgroundWhite
+        )
+    ) {
+    HomeScreenVisual()}
 }
