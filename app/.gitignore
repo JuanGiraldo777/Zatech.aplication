@@ -1,1 +1,10 @@
 /build
+# Archivos de Android Studio / IntelliJ
+.idea/
+.gradle/
+local.properties
+
+# Archivos del sistema
+*.iml
+*.lock
+.DS_Store
