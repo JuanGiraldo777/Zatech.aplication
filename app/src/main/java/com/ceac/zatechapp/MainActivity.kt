@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.ceac.zatechapp.ui.screens.auth.LoginScreenVisual
+import com.ceac.zatechapp.ui.screens.home.HomeScreenVisual
 import com.ceac.zatechapp.ui.theme.ZATECHAPPTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,8 +13,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ZATECHAPPTheme {
 
-                LoginScreenVisual()
-
+                HomeScreenVisual()
 
             }
 

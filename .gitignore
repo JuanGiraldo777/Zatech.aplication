@@ -1,0 +1,7 @@
+.idea/
+.gradle/
+local.properties
+*.iml
+*.lock
+.DS_Store
+

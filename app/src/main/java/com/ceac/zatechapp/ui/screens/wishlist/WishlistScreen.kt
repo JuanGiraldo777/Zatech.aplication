@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,26 +31,35 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ceac.zatechapp.ui.screens.auth.ForgotPasswordLinkVisual
+import com.ceac.zatechapp.ui.screens.auth.LoginButtonVisual
+import com.ceac.zatechapp.ui.screens.auth.LoginFieldsVisual
+import com.ceac.zatechapp.ui.screens.auth.LoginHeaderVisual
+import com.ceac.zatechapp.ui.screens.auth.LoginIconsVisual
+import com.ceac.zatechapp.ui.screens.auth.RegisterLinkVisual
+import com.ceac.zatechapp.ui.screens.auth.ResetPasswordLinkVisual
 import com.ceac.zatechapp.ui.screens.home.AppBottomBarVisual
+import com.ceac.zatechapp.ui.theme.BackgroundWhite
+import com.ceac.zatechapp.ui.theme.BlackPrimaryText
 
 
 @Composable
 fun WishlistScreenVisual() {
 
-    // Scaffold proporciona la estructura básica, especialmente para la Bottom Bar
     Scaffold(
-        bottomBar = { AppBottomBarVisual() }, // Añade la barra de navegación inferior
+        bottomBar = { AppBottomBarVisual() },
         content = { paddingValues ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues) // Respeta el espacio de la Bottom Bar
-                    .verticalScroll(rememberScrollState()) // Permite el desplazamiento vertical
+                    .padding(paddingValues)
+                    .padding(horizontal = 20.dp), // Márgenes laterales
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Spacer(modifier = Modifier.height(20.dp)) // Espacio superior
 
                 TextTop()
 
-                Spacer(modifier = Modifier.height(10.dp))
 
                 // 1. Barra Superior (Búsqueda)
 
@@ -61,6 +72,8 @@ fun WishlistScreenVisual() {
 
                 // Espacio extra al final para asegurar que el último producto no quede pegado al Bottom Bar
                 Spacer(modifier = Modifier.height(80.dp))
+
+
             }
         }
     )
@@ -69,20 +82,18 @@ fun WishlistScreenVisual() {
 
 @Composable
 fun TextTop() {
-    Column( modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 24.dp, vertical = 24.dp),
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         Text(
             text = "Lista de deseos",
-            style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.headlineMedium,
+            color = BlackPrimaryText,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
 
     }
@@ -94,17 +105,13 @@ fun TopSearchWishlist(
     placeholder: String,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 16.dp, bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         // 1. Campo de Búsqueda
         Surface(
             modifier = Modifier
-                .width(280.dp)
+                .width(400.dp)
                 .height(56.dp),
             color = Color(0xFFEEEBEB),
             shape = RoundedCornerShape(12.dp)
@@ -147,7 +154,12 @@ fun TopSearchWishlist(
 @Preview(showBackground = true)
 @Composable
 fun PreviewWishlistScreenVisual() {
-
-    WishlistScreenVisual()
+    MaterialTheme(
+        colorScheme = lightColorScheme(
+            background = BackgroundWhite
+        )
+    ) {
+        WishlistScreenVisual()
+    }
 
 }
