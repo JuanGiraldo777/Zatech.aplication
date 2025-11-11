@@ -8,33 +8,23 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChatBubble
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -59,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ceac.zatechapp.R
+import com.ceac.zatechapp.ui.components.AppBottomBarChange
 import com.ceac.zatechapp.ui.components.SimpleDropShadowUsage
 import com.ceac.zatechapp.ui.theme.BackgroundWhite
 import com.ceac.zatechapp.ui.theme.GraySecondaryText
@@ -68,7 +59,12 @@ import com.ceac.zatechapp.ui.theme.GraySecondaryText
 fun HomeScreenVisual() {
     // Scaffold proporciona la estructura básica, especialmente para la Bottom Bar
     Scaffold(
-        bottomBar = { AppBottomBarVisual() }, // Añade la barra de navegación inferior
+        bottomBar = {
+            AppBottomBarChange(
+                selectedItem = "Home",
+                containerColor = Color.Red
+            )
+        }, // Añade la barra de navegación inferior
         content = { paddingValues ->
             Column(
                 modifier = Modifier
@@ -279,26 +275,25 @@ fun CategoryRowVisual() {
 }
 
 
-
 @Composable
 fun CategoryItem(iconPainter: Painter, iconText: String) {
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-            SimpleDropShadowUsage(
-                imagePainter = iconPainter
-            )
+        SimpleDropShadowUsage(
+            imagePainter = iconPainter
+        )
 
-            Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
-            Text(
-                text = iconText,
-                fontSize = 12.sp,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Medium,
-                color = GraySecondaryText
-            )
-        }
+        Text(
+            text = iconText,
+            fontSize = 12.sp,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Medium,
+            color = GraySecondaryText
+        )
+    }
 
 }
 
@@ -497,63 +492,6 @@ fun ProductCardVisual(
 }
 
 
-@Composable
-fun AppBottomBarVisual() {
-    BottomAppBar(
-        containerColor = Color.White,
-        modifier = Modifier.height(60.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Iconos de navegación
-            BottomNavItem(icon = Icons.Default.Home, label = "Home", isSelected = true)
-            BottomNavItem(icon = Icons.Default.ChatBubble, label = "Chat")
-
-            // Espacio para el FAB central
-            Spacer(modifier = Modifier.width(64.dp))
-
-            BottomNavItem(icon = Icons.Default.Favorite, label = "Favorites")
-            BottomNavItem(icon = Icons.Default.Person, label = "Profile")
-        }
-    }
-    // El FAB se superpone encima del BottomAppBar, necesita un Box o similar para posicionarse
-    // pero aquí lo pondremos simple para la maquetación.
-
-    // FAB de la Cesta
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .offset(y = (-30).dp), // Subir el FAB
-        contentAlignment = Alignment.Center
-    ) {
-        FloatingActionButton(
-            onClick = { /* Acción de la Cesta */ },
-            containerColor = Color.Red,
-            shape = CircleShape,
-            modifier = Modifier.size(60.dp)
-        ) {
-            Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = Color.White)
-        }
-    }
-}
-
-@Composable
-fun RowScope.BottomNavItem(icon: ImageVector, label: String, isSelected: Boolean = false) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
-        Icon(
-            imageVector = icon,
-            contentDescription = label,
-            tint = if (isSelected) Color.Red else Color.Gray,
-            modifier = Modifier.size(24.dp)
-        )
-        // Opcional: Texto pequeño debajo del icono
-        // Text(text = label, fontSize = 10.sp, color = if (isSelected) Color.Red else Color.Gray)
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreenVisual() {
@@ -562,5 +500,6 @@ fun PreviewHomeScreenVisual() {
             background = BackgroundWhite
         )
     ) {
-    HomeScreenVisual()}
+        HomeScreenVisual()
+    }
 }
