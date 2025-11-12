@@ -1,10 +1,9 @@
 package com.ceac.zatechapp.ui.screens.wishlist
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,10 +43,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ceac.zatechapp.R
-import com.ceac.zatechapp.ui.screens.home.AppBottomBarVisual
+import com.ceac.zatechapp.ui.components.AppBottomBarChange
 import com.ceac.zatechapp.ui.theme.BackgroundWhite
 import com.ceac.zatechapp.ui.theme.BlackPrimaryText
-import com.ceac.zatechapp.ui.theme.GraySecondaryText
 import com.ceac.zatechapp.ui.theme.PrimaryRed
 import com.ceac.zatechapp.ui.theme.SecondaryGreen
 
@@ -57,7 +54,14 @@ import com.ceac.zatechapp.ui.theme.SecondaryGreen
 fun WishlistScreenVisual() {
 
     Scaffold(
-        bottomBar = { AppBottomBarVisual() },
+        bottomBar = {
+            AppBottomBarChange(
+
+                selectedItem = "WishList",
+                containerColor = Color.Red
+
+            )
+        },
         content = { paddingValues ->
             Column(
                 modifier = Modifier
@@ -79,9 +83,19 @@ fun WishlistScreenVisual() {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
+                //2. Cards de Productos
+
                 CardsProduct(
                     productName = "Zapatillas para caminatas",
                     productPrice = "80,00 EUR",
+                    image = R.drawable.zapatillas_botas
+                )
+
+                Spacer(modifier = Modifier.height(23.dp))
+
+                CardsProduct(
+                    productName = "Zapatillas Nike",
+                    productPrice = "400,00 EUR",
                     image = R.drawable.zapatillas_nike
                 )
 
@@ -188,6 +202,9 @@ fun CardsProduct(
             //ORGANIZADOR CABECERA: Fila (izquierda-derecha)
             Row(
                 modifier = Modifier.fillMaxWidth(),
+
+
+
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Imagen circular del producto
@@ -197,8 +214,9 @@ fun CardsProduct(
                     contentDescription = productName,
                     modifier = Modifier
                         .size(70.dp)
+                        .background(color = PrimaryRed, CircleShape)
                         .clip(CircleShape)
-                        .border(2.dp, Color(0xFFE74C3C), CircleShape) // borde rojo
+                        .border(2.dp, BlackPrimaryText, CircleShape) // borde rojo
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
